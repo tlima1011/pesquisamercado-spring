@@ -7,24 +7,25 @@ public class IdadeFilhos implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id; 
-	private int idade; 
+	private String idade; 
+	
 	private Convidado convidado; 
 	
 	public IdadeFilhos() {
 		
 	}
 
-	public IdadeFilhos(int idade, Convidado convidado) {
+	public IdadeFilhos(String idade, Convidado convidado) {
 		super();
 		this.idade = idade;
 		this.convidado = convidado;
 	}
 
-	public int getIdade() {
+	public String getIdade() {
 		return idade;
 	}
 
-	public void setIdade(int idade) {
+	public void setIdade(String idade) {
 		this.idade = idade;
 	}
 

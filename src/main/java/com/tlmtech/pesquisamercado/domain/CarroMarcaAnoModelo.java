@@ -8,14 +8,14 @@ public class CarroMarcaAnoModelo implements Serializable{
 	private Integer id;
 	private String marca; 
 	private String modelo; 
-	private Integer ano; 
+	private Integer ano;  
 	
 	private Convidado convidado; 
 	
 	public CarroMarcaAnoModelo() {
 		
 	}
-
+  
 	public CarroMarcaAnoModelo(Integer id, String marca, String modelo, Integer ano, Convidado convidado) {
 		super();
 		this.id = id;

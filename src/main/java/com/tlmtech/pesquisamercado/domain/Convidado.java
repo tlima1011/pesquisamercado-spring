@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tlmtech.pesquisamercado.enums.EstadoCivil;
 import com.tlmtech.pesquisamercado.enums.Instrucao;
 import com.tlmtech.pesquisamercado.enums.Status;
@@ -40,7 +41,7 @@ public class Convidado implements Serializable{
 	private Integer pontosMicrocomputador; 
 	private Integer contMicrocomputador; 
 	private Integer [] lavaLoucas = {0,	3, 6, 6, 6}; 
-	private Integer pontosLavaloucas; 
+	private Integer pontosLavaLoucas; 
 	private Integer contLavaLoucas; 
 	private Integer [] geladeira = {0,	2, 3, 5, 5}; 	
 	private Integer pontosGeladeira;
@@ -55,22 +56,24 @@ public class Convidado implements Serializable{
 	private Integer pontosDvd; 
 	private Integer contDvd; 
 	private Integer [] microondas = {0,	2,	4,	4,	4}; 
-	private Integer pontoMicroondas; 
+	private Integer pontosMicroondas; 
 	private Integer contMicroondas; 
 	private Integer [] motocicleta =  {0, 1, 3,	3, 3};
 	private Integer pontosMotocicleta; 
 	private Integer contMotocicleta; 
-	private Integer [] secadoraDeRoupas = {0,	2,	2,	2,	2}; 
+	private Integer [] secadoraDeRoupas = {0, 2, 2, 2, 2}; 
 	private Integer pontosSecadoraDeRoupas; 
 	private Integer contSecadoraRoupas; 
-	private Integer aguaEncanada; 
+	private Character aguaEncanada; 
 	private Integer pontoAgua; 
 	private Character ruaPavimentada; 
 	private Integer rua;
 	private Instrucao instrucao; 
 	private Integer pontoInstrucao; 
 	private String empresa; 
+	private String profissaoChefe; 
 	private Integer totalPontos; 
+	private String criterio; 
 	private Status status; 
 	
 	private List<Telefone> telefones = new ArrayList<>(); 
@@ -82,27 +85,23 @@ public class Convidado implements Serializable{
 	private List<CarroMarcaAnoModelo> carroMarcaAnoModelo = new ArrayList<>(); 
 		
 	private Recrutamento recrutamento; 
-	
-	private CriterioBrasil criterioBrasil; 
-	
+		
 	public Convidado() { 
 		
 	}
 
-	public Convidado(Long idConvidado, String nomeConvidado, String rg, Date dataNascimento, String cpf, String email,
-			String nacionalidade, String tempoMoradia, Integer idade, EstadoCivil estadoCivil, Character trabalha,
-			String profissao, Character estuda, String curso, String faculdade, Integer[] banheiros,
-			Integer pontosBanheiro, Integer contBanheiro, Integer[] mensalistas, Integer pontosMensalistas,
-			Integer contMensalistas, Integer[] automoveis, Integer pontosAutomoveis, Integer contAutomoveis,
-			Integer[] microcomputador, Integer pontosMicrocomputador, Integer contMicrocomputador, Integer[] lavaLoucas,
-			Integer pontosLavaloucas, Integer contLavaLoucas, Integer[] geladeira, Integer pontosGeladeira,
-			Integer contGeladeira, Integer[] freezer, Integer pontosFreezer, Integer contFreezer, Integer[] lavaRoupa,
-			Integer pontosLavaRoupa, Integer contLavaRoupa, Integer[] dvd, Integer pontosDvd, Integer contDvd,
-			Integer[] microondas, Integer pontoMicroondas, Integer contMicroondas, Integer[] motocicleta,
-			Integer pontosMotocicleta, Integer contMotocicleta, Integer[] secadoraDeRoupas,
-			Integer pontosSecadoraDeRoupas, Integer contSecadoraRoupas, Integer aguaEncanada, Integer pontoAgua,
-			Character ruaPavimentada, Integer rua, Instrucao instrucao, Integer pontoInstrucao, String empresa,
-			Integer totalPontos, Status status, Recrutamento recrutamento, CriterioBrasil criterioBrasil) {
+	public Convidado(Long idConvidado, String nomeConvidado, String rg, Date dataNascimento, 
+			String cpf, String email, 
+			String nacionalidade, String tempoMoradia, Integer idade, EstadoCivil estadoCivil, 
+			Character trabalha, 
+			String profissao, Character estuda, String curso, String faculdade,
+			Integer contBanheiro, Integer contMensalistas, Integer contAutomoveis,
+			Integer contMicrocomputador, 
+			Integer contLavaLoucas, Integer contGeladeira, Integer contFreezer,
+			Integer contLavaRoupa, Integer contDvd,Integer contMicroondas, 
+			Integer contMotocicleta, Integer contSecadoraRoupas, 
+			Character aguaEncanada, Character ruaPavimentada, Instrucao instrucao, 
+			String empresa, String profissaoChefe, Status status, Recrutamento recrutamento) {
 		super();
 		this.idConvidado = idConvidado;
 		this.nomeConvidado = nomeConvidado;
@@ -119,53 +118,42 @@ public class Convidado implements Serializable{
 		this.estuda = estuda;
 		this.curso = curso;
 		this.faculdade = faculdade;
-		this.banheiros = banheiros;
-		this.pontosBanheiro = pontosBanheiro;
 		this.contBanheiro = contBanheiro;
-		this.mensalistas = mensalistas;
-		this.pontosMensalistas = pontosMensalistas;
+		this.pontosBanheiro = calcularPontosBanheiro(contBanheiro);
 		this.contMensalistas = contMensalistas;
-		this.automoveis = automoveis;
-		this.pontosAutomoveis = pontosAutomoveis;
+		this.pontosMensalistas = calcularPontosMensalistas(contMensalistas);
 		this.contAutomoveis = contAutomoveis;
-		this.microcomputador = microcomputador;
-		this.pontosMicrocomputador = pontosMicrocomputador;
+		this.pontosAutomoveis = calcularPontosAutomoveis(contAutomoveis);
 		this.contMicrocomputador = contMicrocomputador;
-		this.lavaLoucas = lavaLoucas;
-		this.pontosLavaloucas = pontosLavaloucas;
+		this.pontosMicrocomputador = calcularPontosMicrocomputador(contMicrocomputador);
 		this.contLavaLoucas = contLavaLoucas;
-		this.geladeira = geladeira;
-		this.pontosGeladeira = pontosGeladeira;
+		this.pontosLavaLoucas = calcularPontosLavaLoucas(contLavaLoucas);
 		this.contGeladeira = contGeladeira;
-		this.freezer = freezer;
-		this.pontosFreezer = pontosFreezer;
+		this.pontosGeladeira = calcularPontosGeladeira(contGeladeira);
 		this.contFreezer = contFreezer;
-		this.lavaRoupa = lavaRoupa;
-		this.pontosLavaRoupa = pontosLavaRoupa;
+		this.pontosFreezer = calcularPontosFreezer(contFreezer);
 		this.contLavaRoupa = contLavaRoupa;
-		this.dvd = dvd;
-		this.pontosDvd = pontosDvd;
+		this.pontosLavaRoupa = calcularPontosLavaRoupa(contLavaRoupa);
 		this.contDvd = contDvd;
-		this.microondas = microondas;
-		this.pontoMicroondas = pontoMicroondas;
+		this.pontosDvd = calcularPontosDvd(contDvd);
 		this.contMicroondas = contMicroondas;
-		this.motocicleta = motocicleta;
-		this.pontosMotocicleta = pontosMotocicleta;
+		this.pontosMicroondas = calcularPontosMicroondas(contMicroondas);
 		this.contMotocicleta = contMotocicleta;
-		this.secadoraDeRoupas = secadoraDeRoupas;
-		this.pontosSecadoraDeRoupas = pontosSecadoraDeRoupas;
+		this.pontosMotocicleta = calcularPontosMotocicleta(contMotocicleta);
 		this.contSecadoraRoupas = contSecadoraRoupas;
+		this.pontosSecadoraDeRoupas = calcularPontosSecadoraRoupas(contSecadoraRoupas);
 		this.aguaEncanada = aguaEncanada;
-		this.pontoAgua = pontoAgua;
+		this.pontoAgua = calcularPontoAgua(aguaEncanada);
 		this.ruaPavimentada = ruaPavimentada;
-		this.rua = rua;
+		this.rua = calcularPontoRua(ruaPavimentada);
 		this.instrucao = instrucao;
-		this.pontoInstrucao = pontoInstrucao;
+		this.pontoInstrucao = calcularPontoInstrucao(); 
 		this.empresa = empresa;
-		this.totalPontos = totalPontos;
+		this.profissaoChefe = profissaoChefe;
 		this.status = status;
 		this.recrutamento = recrutamento;
-		this.criterioBrasil = criterioBrasil;
+		this.calcularPontosTotal(); 
+		this.criterio();
 	}
 
 	public Long getIdConvidado() {
@@ -392,12 +380,12 @@ public class Convidado implements Serializable{
 		this.lavaLoucas = lavaLoucas;
 	}
 
-	public Integer getPontosLavaloucas() {
-		return pontosLavaloucas;
+	public Integer getPontosLavaLoucas() {
+		return pontosLavaLoucas;
 	}
 
-	public void setPontosLavaloucas(Integer pontosLavaloucas) {
-		this.pontosLavaloucas = pontosLavaloucas;
+	public void setPontosLavaLoucas(Integer pontosLavaLoucas) {
+		this.pontosLavaLoucas = pontosLavaLoucas;
 	}
 
 	public Integer getContLavaLoucas() {
@@ -512,12 +500,12 @@ public class Convidado implements Serializable{
 		this.microondas = microondas;
 	}
 
-	public Integer getPontoMicroondas() {
-		return pontoMicroondas;
+	public Integer getPontosMicroondas() {
+		return pontosMicroondas;
 	}
 
-	public void setPontoMicroondas(Integer pontoMicroondas) {
-		this.pontoMicroondas = pontoMicroondas;
+	public void setPontosMicroondas(Integer pontoMicroondas) {
+		this.pontosMicroondas = pontoMicroondas;
 	}
 
 	public Integer getContMicroondas() {
@@ -576,11 +564,11 @@ public class Convidado implements Serializable{
 		this.contSecadoraRoupas = contSecadoraRoupas;
 	}
 
-	public Integer getAguaEncanada() {
+	public Character getAguaEncanada() {
 		return aguaEncanada;
 	}
 
-	public void setAguaEncanada(Integer aguaEncanada) {
+	public void setAguaEncanada(Character aguaEncanada) {
 		this.aguaEncanada = aguaEncanada;
 	}
 
@@ -631,6 +619,14 @@ public class Convidado implements Serializable{
 	public void setEmpresa(String empresa) {
 		this.empresa = empresa;
 	}
+	
+	public String getProfissaoChefe() {
+		return profissaoChefe;
+	}
+
+	public void setProfissaoChefe(String profissaoChefe) {
+		this.profissaoChefe = profissaoChefe;
+	}
 
 	public Integer getTotalPontos() {
 		return totalPontos;
@@ -638,6 +634,14 @@ public class Convidado implements Serializable{
 
 	public void setTotalPontos(Integer totalPontos) {
 		this.totalPontos = totalPontos;
+	}
+	
+	public String getCriterio() {
+		return criterio;
+	}
+
+	public void setCriterio(String criterio) {
+		this.criterio = criterio;
 	}
 
 	public Status getStatus() {
@@ -656,14 +660,6 @@ public class Convidado implements Serializable{
 		this.recrutamento = recrutamento;
 	}
 
-	public CriterioBrasil getCriterioBrasil() {
-		return criterioBrasil;
-	}
-
-	public void setCriterioBrasil(CriterioBrasil criterioBrasil) {
-		this.criterioBrasil = criterioBrasil;
-	}
-
 	public List<Telefone> getTelefones() {
 		return telefones;
 	}
@@ -672,18 +668,139 @@ public class Convidado implements Serializable{
 		return carroMarcaAnoModelo;
 	}
 	
+	public List<IdadeFilhos> getIdadeFilhos() {
+		return idadeFilhos;
+	}
+
+	public List<Endereco> getEnderecos() {
+		return enderecos;
+	}
+	
 	public Integer calcularPontosBanheiro(Integer contBanheiro) {
-			this.setPontosBanheiro(banheiros[contBanheiro]); 
+			this.setPontosBanheiro(banheiros[this.contBanheiro]); 
 			return this.pontosBanheiro;
 	}
 	
 	public Integer calcularPontosMensalistas(Integer contMensalistas) {
-		this.setPontosMensalistas(mensalistas[contMensalistas]);
+		this.setPontosMensalistas(mensalistas[this.contMensalistas]);
 		return this.pontosMensalistas;
 	}
 	
+	public Integer calcularPontosAutomoveis(Integer contAutomoveis) {
+		this.setPontosAutomoveis(automoveis[this.contAutomoveis]);
+		return getPontosAutomoveis();
+	}
+	
+	public Integer calcularPontosMicrocomputador(Integer contMicrocomputador) { 
+		this.setPontosMicrocomputador(microcomputador[this.contMicrocomputador]);
+		return getPontosMicrocomputador(); 
+	}
+	
+	public Integer calcularPontosLavaLoucas(Integer contLavaLoucas) { 
+		this.setPontosLavaLoucas(lavaLoucas[this.contLavaLoucas]);
+		return getPontosLavaLoucas(); 
+	}
+	
+	public Integer calcularPontosGeladeira(Integer contGeladeira) { 
+		this.setPontosGeladeira(geladeira[this.contGeladeira]);
+		return getPontosGeladeira(); 
+	}
+	
+	public Integer calcularPontosFreezer(Integer contFreezer) {
+		this.setPontosFreezer(freezer[this.contFreezer]);
+		return getPontosFreezer();
+	}
+	
+	public Integer calcularPontosLavaRoupa(Integer contLavaRoupa) {
+		this.setPontosLavaRoupa(lavaRoupa[this.contLavaRoupa]);
+		return getPontosLavaRoupa(); 
+	}
+	
+	public Integer calcularPontosDvd(Integer contDvd) {
+		this.setPontosDvd(dvd[this.contDvd]);
+		return getPontosDvd(); 
+	}
 	
 	
+	public Integer calcularPontosMicroondas(Integer contMicroondas) {
+		this.setPontosMicroondas(microondas[this.contMicroondas]);
+		return getPontosMicroondas();
+	}
 	
+	public Integer calcularPontosMotocicleta(Integer contMotocicleta) { 
+		this.setPontosMotocicleta(motocicleta[this.contMotocicleta]);
+		return getPontosMotocicleta();
+	}
 	
+	public Integer calcularPontosSecadoraRoupas(Integer contSecadoraRoupas) {
+		this.setPontosSecadoraDeRoupas(secadoraDeRoupas[this.contSecadoraRoupas]);
+		return getPontosSecadoraDeRoupas(); 
+	}
+	
+	public int calcularPontoAgua(Character aguaEncanada) {
+		this.setAguaEncanada(Character.toUpperCase(this.aguaEncanada));
+		this.pontoAgua = 4; 
+		if (this.getAguaEncanada() != 'S') {
+			 this.pontoAgua = 0;
+		}
+		return this.pontoAgua;
+	}
+		
+	public int calcularPontoRua(Character ruaPavimentada) { 
+		this.setRuaPavimentada(Character.toUpperCase(this.ruaPavimentada));
+		this.rua = 2;
+		if(this.getRuaPavimentada() != 'S') {
+			this.rua = 0;
+		}
+		return this.rua;
+	}
+	
+	public int calcularPontoInstrucao() { 
+		if(this.getInstrucao() == Instrucao.ANALFABETO_FUNDAMENTAL_I_INCOMPLETO) {
+			return this.pontoInstrucao = 0;
+		}
+		else if(this.getInstrucao() == Instrucao.FUNDAMENTAL_I_COMPLETO_FUNDAMENTAL_II_COMPLETO) {
+			return this.pontoInstrucao = 1; 
+		}
+		else if(this.getInstrucao() == Instrucao.FUNDAMENTAL_II_COMPLETO_MEDIO_INCOMPLETO) {
+			return this.pontoInstrucao = 2; 
+		}
+		else if(this.getInstrucao() == Instrucao.MEDIO_COMPLETO_SUPERIOR_INCOMPLETO) {
+			return this.pontoInstrucao = 4;
+		}
+		else if(this.getInstrucao() == Instrucao.SUPERIOR_COMPLETO) {
+			return this.pontoInstrucao = 7;
+		}
+		return this.pontoInstrucao;
+	}
+	
+	public int calcularPontosTotal() { 
+		return this.totalPontos = this.pontosBanheiro + this.pontosMensalistas + this.pontosAutomoveis
+				+ this.pontosMicrocomputador + this.pontosLavaLoucas + this.pontosGeladeira
+				+ this.pontosGeladeira + this.pontosFreezer + this.pontosLavaRoupa + this.pontosDvd
+				+ this.pontosMicroondas + this.pontosMotocicleta + this.pontosSecadoraDeRoupas
+				+ this.pontoAgua + this.rua + this.pontoInstrucao;
+	}
+	
+	public String criterio() { 
+		if(this.getTotalPontos() <= 16) {
+			this.criterio = "D/E"; 
+		}
+		else if(this.getTotalPontos() <= 22) {
+			this.criterio = "C2"; 
+		}
+		else if(this.getTotalPontos() <= 28) {
+			this.criterio = "C1"; 
+		}
+		else if(this.getTotalPontos() <= 37) {
+			this.criterio = "B2"; 
+		}
+		else if(this.getTotalPontos() <= 44) {
+			this.criterio = "B1";
+		}
+		else {
+			this.criterio = "A"; 
+		}
+		return criterio; 
+	}
 }
