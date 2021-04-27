@@ -1,50 +1,41 @@
-package com.tlmtech.pesquisamercado.domain;
+package com.tlmtech.pesquisamercado.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="recrutamento")
-public class Recrutamento implements Serializable{
+import com.tlmtech.pesquisamercado.domain.Recrutamento;
+
+public class RecrutamentoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	@Id
 	private String id; 
 	private String numProjeto; 
 	private String descProjeto; 
 	private Date dataRecrutamento; 
 	private Double valorPagar; 
-	private Double beneficio; 
+	private Double beneficio;
 	
-	@DBRef(lazy = true)
-	private List<Convidado> convidados = new ArrayList<>(); 
-		
-	public Recrutamento() { 
+	public RecrutamentoDTO() {
 		
 	}
 
-	public Recrutamento(String id, String numProjeto, String descProjeto, Date dataRecrutamento,
-			Double valorPagar, Double beneficio) {
-		super();
-		this.id = id;
-		this.numProjeto = numProjeto;
-		this.descProjeto = descProjeto;
-		this.dataRecrutamento = dataRecrutamento;
-		this.valorPagar = valorPagar;
-		this.beneficio = beneficio;
+	public RecrutamentoDTO(Recrutamento obj) {
+		this.id = obj.getId();
+		this.numProjeto = obj.getNumProjeto(); 
+		this.descProjeto = obj.getDescProjeto(); 
+		this.dataRecrutamento = obj.getDataRecrutamento(); 
+		this.valorPagar = obj.getValorPagar(); 
+		this.beneficio = obj.getBeneficio(); 
 	}
 
 	public String getId() {
 		return id;
 	}
 
-	public void setId(String idRecrutamento) {
-		this.id = idRecrutamento;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getNumProjeto() {
@@ -86,9 +77,4 @@ public class Recrutamento implements Serializable{
 	public void setBeneficio(Double beneficio) {
 		this.beneficio = beneficio;
 	}
-
-	public List<Convidado> getConvidados() {
-		return convidados;
-	}
-	
 }

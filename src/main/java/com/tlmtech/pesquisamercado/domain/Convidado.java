@@ -1,19 +1,23 @@
 package com.tlmtech.pesquisamercado.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.tlmtech.pesquisamercado.dto.RecrutamentoDTO;
 import com.tlmtech.pesquisamercado.enums.EstadoCivil;
 import com.tlmtech.pesquisamercado.enums.Instrucao;
 import com.tlmtech.pesquisamercado.enums.Status;
 
-public class Convidado implements Serializable{	
+@Document(collection="convidado")
+public class Convidado implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	private Long idConvidado;
+	@Id
+	private String id;
 	private String nomeConvidado; 
 	private String rg; 
 	private Date dataNascimento; 
@@ -76,21 +80,21 @@ public class Convidado implements Serializable{
 	private String criterio; 
 	private Status status; 
 	
-	private List<Telefone> telefones = new ArrayList<>(); 
+	//private List<Telefone> telefones = new ArrayList<>(); 
 	
-	private List<Endereco> enderecos = new ArrayList<>();
+	//private List<Endereco> enderecos = new ArrayList<>();
 	
-	private List<IdadeFilhos> idadeFilhos = new ArrayList<>(); 
+	//private List<IdadeFilhos> idadeFilhos = new ArrayList<>(); 
 	
-	private List<CarroMarcaAnoModelo> carroMarcaAnoModelo = new ArrayList<>(); 
-		
-	private Recrutamento recrutamento; 
-		
+	//private List<CarroMarcaAnoModelo> carroMarcaAnoModelo = new ArrayList<>(); 
+	
+	private RecrutamentoDTO recrutamento;
+	
 	public Convidado() { 
 		
 	}
 
-	public Convidado(Long idConvidado, String nomeConvidado, String rg, Date dataNascimento, 
+	public Convidado(String id, String nomeConvidado, String rg, Date dataNascimento, 
 			String cpf, String email, 
 			String nacionalidade, String tempoMoradia, Integer idade, EstadoCivil estadoCivil, 
 			Character trabalha, 
@@ -101,9 +105,9 @@ public class Convidado implements Serializable{
 			Integer contLavaRoupa, Integer contDvd,Integer contMicroondas, 
 			Integer contMotocicleta, Integer contSecadoraRoupas, 
 			Character aguaEncanada, Character ruaPavimentada, Instrucao instrucao, 
-			String empresa, String profissaoChefe, Status status, Recrutamento recrutamento) {
+			String empresa, String profissaoChefe, Status status, RecrutamentoDTO recrutamento) {
 		super();
-		this.idConvidado = idConvidado;
+		this.id = id;
 		this.nomeConvidado = nomeConvidado;
 		this.rg = rg;
 		this.dataNascimento = dataNascimento;
@@ -156,12 +160,12 @@ public class Convidado implements Serializable{
 		this.criterio();
 	}
 
-	public Long getIdConvidado() {
-		return idConvidado;
+	public String getId() {
+		return id;
 	}
 
-	public void setIdConvidado(Long idConvidado) {
-		this.idConvidado = idConvidado;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getNomeConvidado() {
@@ -652,15 +656,15 @@ public class Convidado implements Serializable{
 		this.status = status;
 	}
 
-	public Recrutamento getRecrutamento() {
+	public RecrutamentoDTO getRecrutamento() {
 		return recrutamento;
 	}
 
-	public void setRecrutamento(Recrutamento recrutamento) {
+	public void setRecrutamento(RecrutamentoDTO recrutamento) {
 		this.recrutamento = recrutamento;
 	}
 
-	public List<Telefone> getTelefones() {
+	/*public List<Telefone> getTelefones() {
 		return telefones;
 	}
 
@@ -674,7 +678,7 @@ public class Convidado implements Serializable{
 
 	public List<Endereco> getEnderecos() {
 		return enderecos;
-	}
+	}*/
 	
 	public Integer calcularPontosBanheiro(Integer contBanheiro) {
 			this.setPontosBanheiro(banheiros[this.contBanheiro]); 
