@@ -43,12 +43,24 @@ public class RecrutamentoService {
 	
 	
 	private void updateData(Recrutamento newObj, Recrutamento obj) {
-		newObj.setName(obj.getName());	
-		newObj.setEmail(obj.getEmail());
-		
+		newObj.setNumProjeto(obj.getNumProjeto());	
+		newObj.setDescProjeto(obj.getDescProjeto());		
+		newObj.setDataRecrutamento(obj.getDataRecrutamento());
+		newObj.setValorPagar(obj.getValorPagar());
+		newObj.setBeneficio(obj.getBeneficio());
 	}
-
+	
 	public Recrutamento fromDTO(RecrutamentoDTO objdto) {
-		return new User(objdto.getId(), objdto.getName(), objdto.getEmail()); 
+		return new Recrutamento(objdto.getNumProjeto() 
+				, objdto.getDescProjeto()
+				, objdto.getDataRecrutamento()
+				, objdto.getValorPagar()
+				, objdto.getBeneficio()); 
 	}
+//	this.numProjeto = numProjeto;
+//	this.descProjeto = descProjeto;
+//	this.dataRecrutamento = dataRecrutamento;
+//	this.valorPagar = valorPagar;
+//	this.beneficio = beneficio;
+
 }

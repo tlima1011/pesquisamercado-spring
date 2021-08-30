@@ -21,6 +21,7 @@ public class TestConfig implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
 		//convidadoRepository.deleteAll();
 		//recrutamentoRepository.deleteAll();
 		
@@ -52,5 +53,8 @@ public class TestConfig implements CommandLineRunner{
 		
 		//recrutamentoRepository.saveAll(Arrays.asList(r1, r2)); 
 		//convidadoRepository.saveAll(Arrays.asList(c1, c2));
+		
+		Recrutamento r2 = new Recrutamento("555/22","Chocolate", sdf.parse("03/02/2021"), 120.0, 60.0);
+		recrutamentoRepository.saveAll(Arrays.asList(r2));
 	}
 }

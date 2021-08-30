@@ -8,16 +8,13 @@ public class Telefone implements Serializable{
 	
 	private Integer id; 
 	private String telefone; 
-	private Convidado convidado; 
 	
 	public Telefone() {
 		
 	}
 	
-	public Telefone(Convidado convidado, Integer id, String telefone) {
-		super();
-		this.id = id; 
-		this.convidado = convidado; 
+	public Telefone(Integer id, String telefone) {
+		this.id = id;  
 		this.telefone = telefone;
 	}
 	
@@ -37,16 +34,4 @@ public class Telefone implements Serializable{
 		this.telefone = telefone;
 	}
 
-	public Convidado getConvidado() {
-		return convidado;
-	}
-
-	public void setConvidado(Convidado convidado) {
-		this.convidado = convidado;
-	}
-
-	@Override
-	public String toString() {
-		return "Telefone [telefone=" + telefone + "]";
-	}
 }

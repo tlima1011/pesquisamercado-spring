@@ -10,7 +10,7 @@ import com.tlmtech.pesquisamercado.domain.Recrutamento;
 public class RecrutamentoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	private String id; 
+	private Integer id; 
 	private String numProjeto; 
 	private String descProjeto; 
 	private Date dataRecrutamento; 
@@ -30,11 +30,11 @@ public class RecrutamentoDTO implements Serializable{
 		this.beneficio = obj.getBeneficio(); 
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

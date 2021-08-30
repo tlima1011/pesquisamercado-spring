@@ -17,7 +17,7 @@ public class Convidado implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	private String id;
+	private Integer id;
 	private String nomeConvidado; 
 	private String rg; 
 	private Date dataNascimento; 
@@ -94,7 +94,7 @@ public class Convidado implements Serializable{
 		
 	}
 
-	public Convidado(String id, String nomeConvidado, String rg, Date dataNascimento, 
+	public Convidado(Integer id, String nomeConvidado, String rg, Date dataNascimento, 
 			String cpf, String email, 
 			String nacionalidade, String tempoMoradia, Integer idade, EstadoCivil estadoCivil, 
 			Character trabalha, 
@@ -105,8 +105,7 @@ public class Convidado implements Serializable{
 			Integer contLavaRoupa, Integer contDvd,Integer contMicroondas, 
 			Integer contMotocicleta, Integer contSecadoraRoupas, 
 			Character aguaEncanada, Character ruaPavimentada, Instrucao instrucao, 
-			String empresa, String profissaoChefe, Status status, RecrutamentoDTO recrutamento) {
-		super();
+			String empresa, String profissaoChefe, Status status) {
 		this.id = id;
 		this.nomeConvidado = nomeConvidado;
 		this.rg = rg;
@@ -160,11 +159,11 @@ public class Convidado implements Serializable{
 		this.criterio();
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

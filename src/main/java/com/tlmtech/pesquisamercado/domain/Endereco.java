@@ -13,19 +13,18 @@ public class Endereco implements Serializable{
 	
 	private Convidado convidado; 
 	
+	
 	public Endereco() {
 		
 	}
 	
 	
-	public Endereco(Integer id, String logradouro, String numero, String bairro, String cep, Convidado convidado) {
-		super();
+	public Endereco(Integer id, String logradouro, String numero, String bairro, String cep) {
 		this.id = id;
 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.bairro = bairro;
 		this.cep = cep;
-		this.convidado = convidado;
 	}
 
 	public Integer getId() {

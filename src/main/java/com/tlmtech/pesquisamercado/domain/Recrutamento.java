@@ -30,7 +30,7 @@ public class Recrutamento implements Serializable{
 
 	public Recrutamento(String numProjeto, String descProjeto, Date dataRecrutamento,
 			Double valorPagar, Double beneficio) {
-		this.id = id;
+		//this.id = id;
 		this.numProjeto = numProjeto;
 		this.descProjeto = descProjeto;
 		this.dataRecrutamento = dataRecrutamento;

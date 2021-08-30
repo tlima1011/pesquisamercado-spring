@@ -13,43 +13,43 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.tlmtech.pesquisamercado.domain.Recrutamento;
-import com.tlmtech.pesquisamercado.dto.RecrutamentoDTO;
-import com.tlmtech.pesquisamercado.services.RecrutamentoService;
+import com.tlmtech.pesquisamercado.domain.Empresa;
+import com.tlmtech.pesquisamercado.dto.EmpresaDTO;
+import com.tlmtech.pesquisamercado.services.EmpresaService;
 
 @RestController
-@RequestMapping(value="/recrutamento")
-public class RecrutamentoResource {
+@RequestMapping(value="/empresa")
+public class EmpresaResource {
 
 	@Autowired
-	private RecrutamentoService service; 
+	private EmpresaService service; 
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<RecrutamentoDTO>> findAll(){
+	public ResponseEntity<List<EmpresaDTO>> findAll(){
 		
-		List <Recrutamento> list = service.findAll();
-		List<RecrutamentoDTO> listDto = list.stream().map(x -> new RecrutamentoDTO(x)).collect(Collectors.toList()); 
+		List <Empresa> list = service.findAll();
+		List<EmpresaDTO> listDto = list.stream().map(x -> new EmpresaDTO(x)).collect(Collectors.toList()); 
 		return ResponseEntity.ok().body(listDto);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody RecrutamentoDTO objDto){
-		Recrutamento obj = service.fromDTO(objDto); 
+	public ResponseEntity<Void> insert(@RequestBody EmpresaDTO objDto){
+		Empresa obj = service.fromDTO(objDto); 
 		obj = service.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri(); 
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{idEmpresa}").buildAndExpand(obj.getIdEmpresa()).toUri(); 
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@RequestMapping(value = "/{id}", method=RequestMethod.DELETE)
+	@RequestMapping(value = "/{idEmpresa}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		service.delete(id); 
 		return ResponseEntity.noContent().build();
 	}
 	
-	@RequestMapping(value = "/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody RecrutamentoDTO objDto, @PathVariable Integer id){
-		Recrutamento obj = service.fromDTO(objDto); 
-		obj.setId(id);
+	@RequestMapping(value = "/{idEmpresa}", method=RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody EmpresaDTO objDto, @PathVariable Integer idEmpresa){
+		Empresa obj = service.fromDTO(objDto); 
+		obj.setIdEmpresa(idEmpresa);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
