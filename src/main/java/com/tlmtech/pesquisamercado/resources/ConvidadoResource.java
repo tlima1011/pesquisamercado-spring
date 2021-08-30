@@ -13,7 +13,7 @@ import com.tlmtech.pesquisamercado.domain.Convidado;
 import com.tlmtech.pesquisamercado.services.ConvidadoService;
 
 @RestController
-@RequestMapping(value="/convidados")
+@RequestMapping(value="/convidado")
 public class ConvidadoResource {
 
 	@Autowired

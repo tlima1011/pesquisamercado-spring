@@ -17,4 +17,6 @@ public class ConvidadoService {
 	public List<Convidado> findAll(){
 		return repository.findAll(); 
 	}
+	
+	
 }

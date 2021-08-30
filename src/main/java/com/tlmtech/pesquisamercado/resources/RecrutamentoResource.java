@@ -14,7 +14,7 @@ import com.tlmtech.pesquisamercado.dto.RecrutamentoDTO;
 import com.tlmtech.pesquisamercado.services.RecrutamentoService;
 
 @RestController
-@RequestMapping(value="/recrutamentos")
+@RequestMapping(value="/recrutamento")
 public class RecrutamentoResource {
 
 	@Autowired

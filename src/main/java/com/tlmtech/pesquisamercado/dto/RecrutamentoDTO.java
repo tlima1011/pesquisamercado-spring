@@ -22,7 +22,7 @@ public class RecrutamentoDTO implements Serializable{
 	}
 
 	public RecrutamentoDTO(Recrutamento obj) {
-		this.id = obj.getId();
+		//this.id = obj.getId();
 		this.numProjeto = obj.getNumProjeto(); 
 		this.descProjeto = obj.getDescProjeto(); 
 		this.dataRecrutamento = obj.getDataRecrutamento(); 

@@ -14,7 +14,7 @@ public class Recrutamento implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	private String id; 
+	private Integer id; 
 	private String numProjeto; 
 	private String descProjeto; 
 	private Date dataRecrutamento; 
@@ -28,9 +28,8 @@ public class Recrutamento implements Serializable{
 		
 	}
 
-	public Recrutamento(String id, String numProjeto, String descProjeto, Date dataRecrutamento,
+	public Recrutamento(String numProjeto, String descProjeto, Date dataRecrutamento,
 			Double valorPagar, Double beneficio) {
-		super();
 		this.id = id;
 		this.numProjeto = numProjeto;
 		this.descProjeto = descProjeto;
@@ -39,11 +38,11 @@ public class Recrutamento implements Serializable{
 		this.beneficio = beneficio;
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String idRecrutamento) {
+	public void setId(Integer idRecrutamento) {
 		this.id = idRecrutamento;
 	}
 
